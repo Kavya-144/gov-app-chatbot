@@ -17,7 +17,8 @@
       "income_max": 150000
     },
     "apply_steps": "Apply online with ration card and income certificate.",
-    "apply_link": "https://www.india.gov.in/my-government/schemes"
+      "apply_link": "https://www.google.com"
+
   }
 ]
 
