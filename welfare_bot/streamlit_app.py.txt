@@ -1,0 +1,57 @@
+import streamlit as st
+import json
+from googletrans import Translator
+
+# Load schemes
+with open("schemes.json") as f:
+    schemes = json.load(f)
+
+translator = Translator()
+
+def recommend(user):
+    matched = []
+    for s in schemes:
+        c = s["criteria"]
+        if (
+            c.get("job") == user["job"].lower() and
+            c.get("location") == user["location"].lower() and
+            user.get("income", float('inf')) <= c.get("income_max", float('inf')) and
+            user.get("age", 0) <= c.get("age_max", float('inf'))
+        ):
+            matched.append(s)
+    return matched
+
+# Streamlit UI
+st.title("🧾 Welfare Scheme Eligibility Chatbot")
+
+st.write("Answer the following to check which schemes you’re eligible for:")
+
+with st.form("user_form"):
+    age = st.number_input("Age", min_value=0, max_value=120, step=1)
+    job = st.text_input("Job (e.g., farmer, unemployed)")
+    location = st.text_input("Location (e.g., rural, urban)")
+    income = st.number_input("Annual Income (INR)", step=1000)
+    lang = st.selectbox("Preferred Language", options=["en", "hi"])
+    submit = st.form_submit_button("Find My Schemes")
+
+if submit:
+    user = {
+        "age": age,
+        "job": job,
+        "location": location,
+        "income": income
+    }
+    result = recommend(user)
+    st.subheader("Eligible Welfare Schemes:")
+    if not result:
+        st.warning("No matching schemes found. Try different inputs.")
+    else:
+        for s in result:
+            name = s["name"]
+            steps = s["apply_steps"]
+            if lang != "en":
+                name = translator.translate(name, dest=lang).text
+                steps = translator.translate(steps, dest=lang).text
+            st.markdown(f"**{name}**")
+            st.write(steps)
+            st.markdown(f"[Apply Here]({s['apply_link']})")

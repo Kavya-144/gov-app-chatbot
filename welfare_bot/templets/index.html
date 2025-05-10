@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welfare Scheme Finder</title>
+</head>
+<body>
+    <h2>Check Eligibility for Welfare Schemes</h2>
+    <form method="POST">
+        Age: <input name="age" type="number" required><br>
+        Job: <input name="job" required><br>
+        Location: <input name="location" required><br>
+        Income: <input name="income" type="number" required><br>
+        Language (en/hi): <input name="lang" value="en"><br>
+        <button type="submit">Find Schemes</button>
+    </form>
+
+    {% if schemes %}
+        <h3>Matching Schemes:</h3>
+        {% for s in schemes %}
+            <p><strong>{{ s.name }}</strong></p>
+            <p>{{ s.apply_steps }}</p>
+            <a href="{{ s.apply_link }}" target="_blank">Apply Now</a><br><br>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

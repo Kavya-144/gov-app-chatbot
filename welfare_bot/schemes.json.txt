@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Rural Employment Scheme",
+    "criteria": {
+      "job": "farmer",
+      "location": "rural",
+      "income_max": 200000
+    },
+    "apply_steps": "Visit Panchayat office with ID proof.",
+    "apply_link": "https://www.india.gov.in/my-government/schemes"
+  },
+  {
+    "name": "Urban BPL Scheme",
+    "criteria": {
+      "job": "unemployed",
+      "location": "urban",
+      "income_max": 150000
+    },
+    "apply_steps": "Apply online with ration card and income certificate.",
+    "apply_link": "https://www.india.gov.in/my-government/schemes"
+  }
+]
+
